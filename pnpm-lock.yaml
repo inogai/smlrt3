@@ -48,6 +48,9 @@ importers:
       eslint-plugin-format:
         specifier: ^0.1.2
         version: 0.1.2(eslint@9.10.0(jiti@1.21.6))
+      eslint-plugin-readable-tailwind:
+        specifier: ^1.8.0
+        version: 1.8.0(eslint@9.10.0(jiti@1.21.6))(tailwindcss@3.4.11)
       eslint-plugin-simple-import-sort:
         specifier: ^12.1.1
         version: 12.1.1(eslint@9.10.0(jiti@1.21.6))
@@ -1058,6 +1061,13 @@ packages:
         optional: true
       vue-eslint-parser:
         optional: true
+
+  eslint-plugin-readable-tailwind@1.8.0:
+    resolution: {integrity: sha512-ibFGL81kH0UaJkaBzv0Gabc7re/Te0LZKhzrdK8qPkNzGpGjA0J+mDJWtd0635KIytvEnzd1t53m9T2Ug8lxuQ==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
+      tailwindcss: '>=3.3.0'
 
   eslint-plugin-regexp@2.6.0:
     resolution: {integrity: sha512-FCL851+kislsTEQEMioAlpDuK5+E5vs0hi1bF8cFlPlHcEjeRhuAzEsGikXRreE+0j4WhW2uO54MqTjXtYOi3A==}
@@ -3149,6 +3159,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  eslint-plugin-readable-tailwind@1.8.0(eslint@9.10.0(jiti@1.21.6))(tailwindcss@3.4.11):
+    dependencies:
+      eslint: 9.10.0(jiti@1.21.6)
+      tailwindcss: 3.4.11
 
   eslint-plugin-regexp@2.6.0(eslint@9.10.0(jiti@1.21.6)):
     dependencies:

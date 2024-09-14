@@ -1,4 +1,5 @@
 import antfu from '@antfu/eslint-config'
+import eslintPluginReadableTailwind from 'eslint-plugin-readable-tailwind'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 
 export default antfu(
@@ -39,6 +40,18 @@ export default antfu(
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       'perfectionist/sort-imports': 'off',
+    },
+  },
+  {
+    plugins: {
+      'readable-tailwind': eslintPluginReadableTailwind,
+    },
+    rules: {
+      ...eslintPluginReadableTailwind.configs.warning.rules,
+      ...eslintPluginReadableTailwind.configs.error.rules,
+      'readable-tailwind/multiline': ['error', {
+        group: 'newLine',
+      }],
     },
   },
 )
