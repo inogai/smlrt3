@@ -49,7 +49,7 @@ export default antfu(
           // or `@` followed by a letter.
           ['^@?\\w'],
           // Vue Components Import
-          ['\\.vue$'],
+          ['\\.vue$', '^@/components/ui/'],
           // Absolute imports and other imports such as Vue-style `@/foo`.
           // Anything not matched in another group.
           ['^'],
