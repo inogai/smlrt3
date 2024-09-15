@@ -43,7 +43,7 @@ export class KmbApi implements BaseApi {
       ret.push(
         KmbStation({
           id: stop.stop,
-          name: stop.name_tc,
+          _name: stop.name_tc,
           _lat: Number.parseFloat(stop.lat),
           _lon: Number.parseFloat(stop.long),
         }),

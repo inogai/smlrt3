@@ -8,11 +8,11 @@ import type { KmbStation } from './KmbStation'
 export interface IKmbEta {
   _route: KmbRoute
   _stop: KmbStation
-  etas: {
+  _items: {
     val: EtaDescriptor
     rmk?: string
   }[]
-  etaSeqs: number[]
+  _etaSeqs: number[]
 }
 
 export type KmbEta = IKmbEta & TEta & {
@@ -25,15 +25,20 @@ export type KmbEta = IKmbEta & TEta & {
   ) => void
 }
 
-const KmbEtaPrototype = {
+const implEtaForKmbEta: TEta = {
   route(this: KmbEta) {
     return this._route
   },
-
   station(this: KmbEta) {
     return this._stop
   },
+  items(this: KmbEta) {
+    return this._items
+  },
+}
 
+const KmbEtaPrototype
+= attachPrototype(implEtaForKmbEta, {
   addEta(
     this: KmbEta,
     eta: {
@@ -45,19 +50,19 @@ const KmbEtaPrototype = {
     // Prevent duplicates
     // For some reason, the API sometimes
     // returns duplicate etas with different service types
-    if (this.etaSeqs.includes(etaSeq))
+    if (this._etaSeqs.includes(etaSeq))
       return
 
-    this.etaSeqs.push(etaSeq)
-    this.etas.push(eta)
+    this._etaSeqs.push(etaSeq)
+    this._items.push(eta)
   },
-} as const
+})
 
 export function KmbEta(data: { route: KmbRoute, stop: KmbStation }): KmbEta {
   return attachPrototype({
     _route: data.route,
     _stop: data.stop,
-    etas: [],
-    etaSeqs: [],
+    _items: [],
+    _etaSeqs: [],
   }, KmbEtaPrototype)
 }

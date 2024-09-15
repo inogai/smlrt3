@@ -2,7 +2,7 @@ import type { TStation } from '../base'
 
 interface IKmbStation {
   id: string
-  name: string
+  _name: string
   _lat: number
   _lon: number
 }
@@ -21,7 +21,7 @@ export function KmbStation(props: IKmbStation): KmbStation {
 
 KmbStation.prototype = {
   name(this: KmbStation) {
-    return this.name
+    return this._name
   },
   lat(this: KmbStation) {
     return this._lat

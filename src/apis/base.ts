@@ -1,5 +1,7 @@
 import type { ResultPromise } from '@/lib/results'
 
+import type { EtaDescriptor } from './EtaDescriptor'
+
 export interface TStation {
   name: () => string
   lat: () => number
@@ -14,6 +16,11 @@ export interface TRoute {
 export interface TEta {
   route: () => TRoute
   station: () => TStation
+  items: () => {
+    val: EtaDescriptor
+    rmk?: string
+  }[]
+
 }
 
 export interface BaseApi {
