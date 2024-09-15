@@ -28,7 +28,7 @@ const { item } = defineProps<{
         <div class="flex flex-col text-sm">
           <div>
             往&nbsp;
-            <span class="text-lg font-semibold text-primary">
+            <span class="text-lg font-semibold text-tinted-primary">
               {{ item.route().dest() }}
             </span>
           </div>
@@ -41,7 +41,7 @@ const { item } = defineProps<{
             v-for="(eta, ind) in item.items()"
             :key="ind"
             :class="{
-              'text-xl font-bold text-primary':
+              'text-xl font-bold text-tinted-primary':
                 (ind === 0 || item.items().slice(0, ind).every(
                   ({ val }) => {
                     return isKind(val, EtaDescriptor.JustDeparted)
