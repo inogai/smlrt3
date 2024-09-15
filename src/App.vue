@@ -43,7 +43,10 @@ fetchData()
           v-for="(item, index) in etaEntries"
           :key="index"
         >
-          <EtaItem :item="item" />
+          <div :class="{ 'border-t': index }" />
+          <div class="p-2">
+            <EtaItem :item="item" />
+          </div>
         </template>
       </CardContent>
     </Card>
