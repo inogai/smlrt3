@@ -54,4 +54,7 @@ export default antfu(
       }],
     },
   },
+  {
+    ignores: ['src/clients/**/*'],
+  },
 )
