@@ -2,6 +2,12 @@
 import { ref } from 'vue'
 
 import EtaItem from '@/components/EtaItem.vue'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 
 import type { TEta } from '@/apis/base'
 import { getCurrentPosition } from '@/apis/geolocation'
@@ -25,12 +31,21 @@ fetchData()
 </script>
 
 <template>
-  <div>
-    <template
-      v-for="(item, index) in etaEntries"
-      :key="index"
-    >
-      <EtaItem :item="item" />
-    </template>
+  <div class="container mt-8">
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          即時到站時間
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <template
+          v-for="(item, index) in etaEntries"
+          :key="index"
+        >
+          <EtaItem :item="item" />
+        </template>
+      </CardContent>
+    </Card>
   </div>
 </template>
