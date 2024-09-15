@@ -1,6 +1,7 @@
 import antfu from '@antfu/eslint-config'
 import eslintPluginReadableTailwind from 'eslint-plugin-readable-tailwind'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import tailwindcss from 'eslint-plugin-tailwindcss'
 
 export default antfu(
   {
@@ -61,6 +62,7 @@ export default antfu(
       'perfectionist/sort-imports': 'off',
     },
   },
+  ...tailwindcss.configs['flat/recommended'],
   {
     plugins: {
       'readable-tailwind': eslintPluginReadableTailwind,
