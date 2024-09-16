@@ -20,24 +20,39 @@ import {
 import type { TEta } from '@/apis/base'
 import { getCurrentPosition } from '@/apis/geolocation'
 import { KmbApi } from '@/apis/kmb'
+import { MAX_DISTANCE } from '@/env'
 import { Ok } from '@/lib/results'
 
 const kmb = new KmbApi()
 
 const searchQuery = ref<string[]>([])
 
-function evalSearchQuery(entry: TEta): boolean {
+function evalSearchQuery(entry: Entry): boolean {
   return searchQuery.value.every((q) => {
-    return entry.route().name().includes(q)
-      || entry.route().dest().includes(q)
-      || entry.station().name().includes(q)
+    return entry.entry.route().name().includes(q)
+      || entry.entry.route().dest().includes(q)
+      || entry.entry.station().name().includes(q)
   })
 }
 
-const etaEntries = ref<TEta[]>([])
+interface Entry {
+  entry: TEta
+  distance: number
+  key: string
+  isFavourite: boolean
+}
+
+const etaEntries = ref<Entry[]>([])
 
 const computedEtaEntries = computed(() => {
-  return etaEntries.value.filter(evalSearchQuery)
+  return etaEntries.value
+    .filter(evalSearchQuery)
+    .map(entry => ({
+      ...entry,
+      precedance: MAX_DISTANCE - entry.distance
+        + (entry.isFavourite ? 1 : 0),
+    }))
+    .sort((a, b) => b.precedance - a.precedance)
 })
 
 async function fetchData() {
@@ -45,7 +60,20 @@ async function fetchData() {
   const res = await kmb.getNearbyEtas(pos.coords.latitude, pos.coords.longitude)
 
   res.andThen((data) => {
-    etaEntries.value.push(...data)
+    etaEntries.value.push(...data.map((entry) => {
+      return {
+        entry,
+        distance: entry.station().distance({
+          lat: pos.coords.latitude,
+          lon: pos.coords.longitude,
+        }),
+        key: entry.route().name()
+          + entry.route().dest()
+          + entry.station().name(),
+        isFavourite: false,
+      }
+    }))
+
     return Ok()
   })
 }
@@ -75,12 +103,18 @@ fetchData()
       </CardHeader>
       <CardContent>
         <template
-          v-for="(item, index) in computedEtaEntries"
-          :key="index"
+          v-for="entry in computedEtaEntries"
+          :key="entry.key"
         >
           <Separator />
           <div class="p-2">
-            <EtaItem :item="item" />
+            <EtaItem
+              :is-favourite="entry.isFavourite"
+              :item="entry.entry"
+              @update:is-favourite="val => {
+                etaEntries.find((e) => e.key === entry.key)!.isFavourite = val
+              }"
+            />
           </div>
         </template>
       </CardContent>
