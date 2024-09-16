@@ -48,9 +48,6 @@ importers:
       '@hey-api/openapi-ts':
         specifier: ^0.53.0
         version: 0.53.0(typescript@5.6.2)
-      '@types/eslint-plugin-tailwindcss':
-        specifier: ^3.17.0
-        version: 3.17.0
       '@vitejs/plugin-vue':
         specifier: ^5.1.2
         version: 5.1.3(vite@5.4.5(@types/node@22.5.5))(vue@3.5.5(typescript@5.6.2))
@@ -60,6 +57,9 @@ importers:
       eslint:
         specifier: ^9.10.0
         version: 9.10.0(jiti@1.21.6)
+      eslint-plugin-disable-autofix:
+        specifier: ^5.0.1
+        version: 5.0.1(eslint@9.10.0(jiti@1.21.6))
       eslint-plugin-format:
         specifier: ^0.1.2
         version: 0.1.2(eslint@9.10.0(jiti@1.21.6))
@@ -636,12 +636,6 @@ packages:
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
 
-  '@types/eslint-plugin-tailwindcss@3.17.0':
-    resolution: {integrity: sha512-ucQGf2YIdTcndYcxRU3UdZgmhUHsOlbIF4BaRtl0op+7k2JmqM2i3aXZ6XIcfZgVq1ZKov7VM5c/BR81ukmkyg==}
-
-  '@types/eslint@9.6.1':
-    resolution: {integrity: sha512-FXx2pKgId/WyYo2jXw63kk7/+TY7u7AziEJxJAnSFzHlqTAS3Ync6SvgYAN/k4/PQpnnVuzoMuVnByKK2qp0ag==}
-
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
@@ -842,6 +836,10 @@ packages:
   anymatch@3.1.3:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
+
+  app-root-path@3.1.0:
+    resolution: {integrity: sha512-biN3PwB2gUtjaYy/isrU3aNWI5w+fAfvHkSvCKeQGxhmYpwKFUxudR3Yya+KqVRHBmEDYh+/lTozYCFbmzX4nA==}
+    engines: {node: '>= 6.0.0'}
 
   are-docs-informative@0.0.2:
     resolution: {integrity: sha512-ixiS0nLNNG5jNQzgZJNoUpBKdo9yTYZMGJ+QgT2jmjR7G7+QHRCc4v6LQ3NgE7EBJq+o0ams3waJwkrlBom8Ig==}
@@ -1167,6 +1165,11 @@ packages:
     peerDependencies:
       eslint: '*'
 
+  eslint-plugin-disable-autofix@5.0.1:
+    resolution: {integrity: sha512-uT2xNjHgnZezw9GlLkoxUyGwHL9NObrhR+rcRI0XzJkCUQDVLh+fV+wFD4th8O8LQp+CWH+k6gMXgJ1eMC9PCQ==}
+    peerDependencies:
+      eslint: '>= 7'
+
   eslint-plugin-es-x@7.8.0:
     resolution: {integrity: sha512-7Ds8+wAAoV3T+LAKeu39Y5BzXCrGKrcISfgKEqTS4BDN8SFEDQd0S43jiQ8vIa3wUKD07qitZdfzlenSi8/0qQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -1287,6 +1290,10 @@ packages:
     peerDependencies:
       '@vue/compiler-sfc': ^3.3.0
       eslint: ^8.50.0 || ^9.0.0
+
+  eslint-rule-composer@0.3.0:
+    resolution: {integrity: sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==}
+    engines: {node: '>=4.0.0'}
 
   eslint-scope@7.2.2:
     resolution: {integrity: sha512-dOt21O7lTMhDM+X9mB4GX+DZrZtCUJPL/wlcTqxyrx5IvO0IYtILdtrQGQp+8n5S0gwSVmOf9NQrjMOgfQZlIg==}
@@ -3110,15 +3117,6 @@ snapshots:
     dependencies:
       '@types/ms': 0.7.34
 
-  '@types/eslint-plugin-tailwindcss@3.17.0':
-    dependencies:
-      '@types/eslint': 9.6.1
-
-  '@types/eslint@9.6.1':
-    dependencies:
-      '@types/estree': 1.0.5
-      '@types/json-schema': 7.0.15
-
   '@types/estree@1.0.5': {}
 
   '@types/json-schema@7.0.15': {}
@@ -3368,6 +3366,8 @@ snapshots:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
+
+  app-root-path@3.1.0: {}
 
   are-docs-informative@0.0.2: {}
 
@@ -3685,6 +3685,13 @@ snapshots:
       '@es-joy/jsdoccomment': 0.48.0
       eslint: 9.10.0(jiti@1.21.6)
 
+  eslint-plugin-disable-autofix@5.0.1(eslint@9.10.0(jiti@1.21.6)):
+    dependencies:
+      app-root-path: 3.1.0
+      eslint: 9.10.0(jiti@1.21.6)
+      eslint-rule-composer: 0.3.0
+      lodash: 4.17.21
+
   eslint-plugin-es-x@7.8.0(eslint@9.10.0(jiti@1.21.6)):
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@9.10.0(jiti@1.21.6))
@@ -3866,6 +3873,8 @@ snapshots:
     dependencies:
       '@vue/compiler-sfc': 3.5.5
       eslint: 9.10.0(jiti@1.21.6)
+
+  eslint-rule-composer@0.3.0: {}
 
   eslint-scope@7.2.2:
     dependencies:

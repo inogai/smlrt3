@@ -1,4 +1,5 @@
 import antfu from '@antfu/eslint-config'
+import disableAutofix from 'eslint-plugin-disable-autofix'
 import eslintPluginReadableTailwind from 'eslint-plugin-readable-tailwind'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import tailwindcss from 'eslint-plugin-tailwindcss'
@@ -73,6 +74,15 @@ export default antfu(
       'readable-tailwind/multiline': ['error', {
         group: 'newLine',
       }],
+    },
+  },
+  {
+    plugins: {
+      'disable-autofix': disableAutofix,
+    },
+    rules: {
+      'vue/html-self-closing': 'off',
+      'disable-autofix/vue/html-self-closing': 'warn',
     },
   },
   {
