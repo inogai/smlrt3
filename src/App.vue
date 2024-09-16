@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 
 import type { TEta } from '@/apis/base'
 import { getCurrentPosition } from '@/apis/geolocation'
@@ -43,7 +44,7 @@ fetchData()
           v-for="(item, index) in etaEntries"
           :key="index"
         >
-          <div :class="{ 'border-t': index }" />
+          <Separator />
           <div class="p-2">
             <EtaItem :item="item" />
           </div>
