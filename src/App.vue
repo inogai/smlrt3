@@ -22,11 +22,13 @@ import {
 import type { TEta } from '@/apis/base'
 import { getCurrentPosition } from '@/apis/geolocation'
 import { KmbApi } from '@/apis/kmb'
+import { LrtApi } from '@/apis/lrt'
 import { MAX_DISTANCE } from '@/env'
 import { Ok } from '@/lib/results'
 import { SetSerializer } from '@/lib/serializers'
 
 const kmb = new KmbApi()
+const lrt = new LrtApi()
 
 const searchQuery = ref<string[]>([])
 
@@ -82,26 +84,31 @@ function updateFavourite(key: string, val: boolean) {
 
 async function fetchData() {
   const pos = await getCurrentPosition()
-  const res = await kmb.getNearbyEtas(pos.coords.latitude, pos.coords.longitude)
+  const apis = [kmb, lrt]
 
-  res.andThen((data) => {
-    etaEntries.value.push(...data.map((entry) => {
-      const key = entry.route().name()
-        + entry.route().dest()
-        + entry.station().name()
+  apis.map(api => api.getNearbyEtas(
+    pos.coords.latitude,
+    pos.coords.longitude,
+  )).forEach(async (res) => {
+    (await res).andThen((data) => {
+      etaEntries.value.push(...data.map((entry) => {
+        const key = entry.route().name()
+          + entry.route().dest()
+          + entry.station().name()
 
-      return {
-        entry,
-        distance: entry.station().distance({
-          lat: pos.coords.latitude,
-          lon: pos.coords.longitude,
-        }),
-        key,
-        isFavourite: favList.value.has(key),
-      }
-    }))
+        return {
+          entry,
+          distance: entry.station().distance({
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+          }),
+          key,
+          isFavourite: favList.value.has(key),
+        }
+      }))
 
-    return Ok()
+      return Ok()
+    })
   })
 }
 

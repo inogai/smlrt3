@@ -1,0 +1,478 @@
+[
+  {
+    "id": 1,
+    "name_en": "Tuen Mun Ferry Pier",
+    "name_tc": "屯門碼頭",
+    "lat": 22.3730122,
+    "lon": 113.9657735
+  },
+  {
+    "id": 10,
+    "name_en": "Melody Garden",
+    "name_tc": "美樂",
+    "lat": 22.3750756,
+    "lon": 113.958923
+  },
+  {
+    "id": 15,
+    "name_en": "Butterfly",
+    "name_tc": "蝴蝶",
+    "lat": 22.3780412,
+    "lon": 113.9592971
+  },
+  {
+    "id": 20,
+    "name_en": "Light Rail Depot",
+    "name_tc": "輕鐵車廠",
+    "lat": 22.381682,
+    "lon": 113.9611507
+  },
+  {
+    "id": 30,
+    "name_en": "Lung Mun",
+    "name_tc": "龍門",
+    "lat": 22.3854134,
+    "lon": 113.9629343
+  },
+  {
+    "id": 40,
+    "name_en": "Tsing Shan Tsuen",
+    "name_tc": "青山村",
+    "lat": 22.3909221,
+    "lon": 113.9651061
+  },
+  {
+    "id": 50,
+    "name_en": "Tsing Wun",
+    "name_tc": "青雲",
+    "lat": 22.3936594,
+    "lon": 113.9663703
+  },
+  {
+    "id": 60,
+    "name_en": "Kin On",
+    "name_tc": "建安",
+    "lat": 22.3950839,
+    "lon": 113.9675118
+  },
+  {
+    "id": 70,
+    "name_en": "Ho Tin",
+    "name_tc": "河田",
+    "lat": 22.3974334,
+    "lon": 113.9709207
+  },
+  {
+    "id": 75,
+    "name_en": "Choy Yee Bridge",
+    "name_tc": "蔡意橋",
+    "lat": 22.3999113,
+    "lon": 113.9729612
+  },
+  {
+    "id": 80,
+    "name_en": "Affluence",
+    "name_tc": "澤豐",
+    "lat": 22.4039299,
+    "lon": 113.9738545
+  },
+  {
+    "id": 90,
+    "name_en": "Tuen Mun Hospital",
+    "name_tc": "屯門醫院",
+    "lat": 22.4077449,
+    "lon": 113.9750113
+  },
+  {
+    "id": 100,
+    "name_en": "Siu Hong",
+    "name_tc": "兆康",
+    "lat": 22.4116644,
+    "lon": 113.9763938
+  },
+  {
+    "id": 110,
+    "name_en": "Kei Lun",
+    "name_tc": "麒麟",
+    "lat": 22.4110074,
+    "lon": 113.9742332
+  },
+  {
+    "id": 120,
+    "name_en": "Ching Chung",
+    "name_tc": "青松",
+    "lat": 22.4110074,
+    "lon": 113.9742332
+  },
+  {
+    "id": 130,
+    "name_en": "Kin Sang",
+    "name_tc": "建生",
+    "lat": 22.4072871,
+    "lon": 113.9704025
+  },
+  {
+    "id": 140,
+    "name_en": "Tin King",
+    "name_tc": "田景",
+    "lat": 22.4079104,
+    "lon": 113.963271
+  },
+  {
+    "id": 150,
+    "name_en": "Leung King",
+    "name_tc": "良景",
+    "lat": 22.4065062,
+    "lon": 113.9610648
+  },
+  {
+    "id": 160,
+    "name_en": "San Wai",
+    "name_tc": "新圍",
+    "lat": 22.4065062,
+    "lon": 113.9610648
+  },
+  {
+    "id": 170,
+    "name_en": "Shek Pai",
+    "name_tc": "石排",
+    "lat": 22.4018012,
+    "lon": 113.9658481
+  },
+  {
+    "id": 180,
+    "name_en": "Shan King (North)",
+    "name_tc": "山景 (北)",
+    "lat": 22.3988943,
+    "lon": 113.9649272
+  },
+  {
+    "id": 190,
+    "name_en": "Shan King (South)",
+    "name_tc": "山景 (南)",
+    "lat": 22.3988943,
+    "lon": 113.9649272
+  },
+  {
+    "id": 200,
+    "name_en": "Ming Kum",
+    "name_tc": "鳴琴",
+    "lat": 22.3967819,
+    "lon": 113.9652566
+  },
+  {
+    "id": 212,
+    "name_en": "Tai Hing (North)",
+    "name_tc": "大興 (北)",
+    "lat": 22.4045985,
+    "lon": 113.9678101
+  },
+  {
+    "id": 220,
+    "name_en": "Tai Hing (South)",
+    "name_tc": "大興 (南)",
+    "lat": 22.4045985,
+    "lon": 113.9678101
+  },
+  {
+    "id": 230,
+    "name_en": "Ngan Wai",
+    "name_tc": "銀圍",
+    "lat": 22.4028262,
+    "lon": 113.96985
+  },
+  {
+    "id": 240,
+    "name_en": "Siu Hei",
+    "name_tc": "兆禧",
+    "lat": 22.3752452,
+    "lon": 113.9663233
+  },
+  {
+    "id": 250,
+    "name_en": "Tuen Mun Swimming Pool",
+    "name_tc": "屯門泳池",
+    "lat": 22.3816142,
+    "lon": 113.968216
+  },
+  {
+    "id": 260,
+    "name_en": "Goodview Garden",
+    "name_tc": "豐景園",
+    "lat": 22.3816142,
+    "lon": 113.968216
+  },
+  {
+    "id": 265,
+    "name_en": "Siu Lun",
+    "name_tc": "兆麟",
+    "lat": 22.384594,
+    "lon": 113.9728961
+  },
+  {
+    "id": 270,
+    "name_en": "On Ting",
+    "name_tc": "安定",
+    "lat": 22.384594,
+    "lon": 113.9728961
+  },
+  {
+    "id": 275,
+    "name_en": "Yau Oi",
+    "name_tc": "友愛",
+    "lat": 22.3878249,
+    "lon": 113.9728813
+  },
+  {
+    "id": 280,
+    "name_en": "Town Centre",
+    "name_tc": "市中心",
+    "lat": 22.3914189,
+    "lon": 113.9727843
+  },
+  {
+    "id": 295,
+    "name_en": "Tuen Mun",
+    "name_tc": "屯門",
+    "lat": 22.3941171,
+    "lon": 113.9709068
+  },
+  {
+    "id": 300,
+    "name_en": "Pui To",
+    "name_tc": "杯渡",
+    "lat": 22.3945149,
+    "lon": 113.9741943
+  },
+  {
+    "id": 310,
+    "name_en": "Hoh Fuk Tong",
+    "name_tc": "何福堂",
+    "lat": 22.3945149,
+    "lon": 113.9741943
+  },
+  {
+    "id": 320,
+    "name_en": "San Hui",
+    "name_tc": "新墟",
+    "lat": 22.3974283,
+    "lon": 113.9752141
+  },
+  {
+    "id": 330,
+    "name_en": "Prime View",
+    "name_tc": "景峰",
+    "lat": 22.4033026,
+    "lon": 113.978783
+  },
+  {
+    "id": 340,
+    "name_en": "Fung Tei",
+    "name_tc": "鳳地",
+    "lat": 22.4071296,
+    "lon": 113.9764406
+  },
+  {
+    "id": 350,
+    "name_en": "Lam Tei",
+    "name_tc": "藍地",
+    "lat": 22.4185039,
+    "lon": 113.9799806
+  },
+  {
+    "id": 360,
+    "name_en": "Nai Wai",
+    "name_tc": "泥圍",
+    "lat": 22.4237034,
+    "lon": 113.9843683
+  },
+  {
+    "id": 370,
+    "name_en": "Chung Uk Tsuen",
+    "name_tc": "鍾屋村",
+    "lat": 22.4296602,
+    "lon": 113.9900923
+  },
+  {
+    "id": 380,
+    "name_en": "Hung Shui Kiu",
+    "name_tc": "洪水橋",
+    "lat": 22.4335894,
+    "lon": 113.9954168
+  },
+  {
+    "id": 390,
+    "name_en": "Tong Fong Tsuen",
+    "name_tc": "塘坊村",
+    "lat": 22.4335894,
+    "lon": 113.9954168
+  },
+  {
+    "id": 400,
+    "name_en": "Ping Shan",
+    "name_tc": "屏山",
+    "lat": 22.4418641,
+    "lon": 114.0035106
+  },
+  {
+    "id": 425,
+    "name_en": "Hang Mei Tsuen",
+    "name_tc": "坑尾村",
+    "lat": 22.4455769,
+    "lon": 114.0030038
+  },
+  {
+    "id": 430,
+    "name_en": "Tin Shui Wai",
+    "name_tc": "天水圍",
+    "lat": 22.4481776,
+    "lon": 114.002445
+  },
+  {
+    "id": 435,
+    "name_en": "Tin Tsz",
+    "name_tc": "天慈",
+    "lat": 22.4527272,
+    "lon": 114.0039336
+  },
+  {
+    "id": 445,
+    "name_en": "Tin Yiu",
+    "name_tc": "天耀",
+    "lat": 22.4527272,
+    "lon": 114.0039336
+  },
+  {
+    "id": 448,
+    "name_en": "Locwood",
+    "name_tc": "樂湖",
+    "lat": 22.450367,
+    "lon": 114.0005075
+  },
+  {
+    "id": 450,
+    "name_en": "Tin Wu",
+    "name_tc": "天湖",
+    "lat": 22.4549721,
+    "lon": 114.0035663
+  },
+  {
+    "id": 455,
+    "name_en": "Ginza",
+    "name_tc": "銀座",
+    "lat": 22.4549721,
+    "lon": 114.0035663
+  },
+  {
+    "id": 460,
+    "name_en": "Tin Shui",
+    "name_tc": "天瑞",
+    "lat": 22.4575882,
+    "lon": 114.0028032
+  },
+  {
+    "id": 468,
+    "name_en": "Chung Fu",
+    "name_tc": "頌富",
+    "lat": 22.4559517,
+    "lon": 113.9972478
+  },
+  {
+    "id": 480,
+    "name_en": "Tin Fu",
+    "name_tc": "天富",
+    "lat": 22.4649639,
+    "lon": 113.9952736
+  },
+  {
+    "id": 490,
+    "name_en": "Chestwood",
+    "name_tc": "翠湖",
+    "lat": 22.4597361,
+    "lon": 113.9973532
+  },
+  {
+    "id": 500,
+    "name_en": "Tin Wing",
+    "name_tc": "天榮",
+    "lat": 22.4592405,
+    "lon": 114.0005798
+  },
+  {
+    "id": 510,
+    "name_en": "Tin Yuet",
+    "name_tc": "天悅",
+    "lat": 22.4592405,
+    "lon": 114.0005798
+  },
+  {
+    "id": 520,
+    "name_en": "Tin Sau",
+    "name_tc": "天秀",
+    "lat": 22.4628292,
+    "lon": 113.9994743
+  },
+  {
+    "id": 530,
+    "name_en": "Wetland Park",
+    "name_tc": "濕地公園",
+    "lat": 22.4696057,
+    "lon": 114.0003729
+  },
+  {
+    "id": 540,
+    "name_en": "Tin Heng",
+    "name_tc": "天恒",
+    "lat": 22.4697099,
+    "lon": 113.9985509
+  },
+  {
+    "id": 550,
+    "name_en": "Tin Yat",
+    "name_tc": "天逸",
+    "lat": 22.46691867066446,
+    "lon": 113.99926023289774
+  },
+  {
+    "id": 560,
+    "name_en": "Shui Pin Wai",
+    "name_tc": "水邊圍",
+    "lat": 22.4444536,
+    "lon": 114.0176679
+  },
+  {
+    "id": 570,
+    "name_en": "Fung Nin Road",
+    "name_tc": "豐年路",
+    "lat": 22.4444536,
+    "lon": 114.0176679
+  },
+  {
+    "id": 580,
+    "name_en": "Hong Lok Road",
+    "name_tc": "康樂路",
+    "lat": 22.4444895,
+    "lon": 114.0249283
+  },
+  {
+    "id": 590,
+    "name_en": "Tai Tong Road",
+    "name_tc": "大棠路",
+    "lat": 22.4445251,
+    "lon": 114.0268264
+  },
+  {
+    "id": 600,
+    "name_en": "Yuen Long",
+    "name_tc": "元朗",
+    "lat": 22.4462779,
+    "lon": 114.0320601
+  },
+  {
+    "id": 920,
+    "name_en": "Sam Shing",
+    "name_tc": "三聖",
+    "lat": 22.3828099,
+    "lon": 113.9754026
+  }
+]
