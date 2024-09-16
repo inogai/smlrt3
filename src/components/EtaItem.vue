@@ -23,7 +23,7 @@ const { item } = defineProps<{
       <div class="w-4" />
       <div class="flex flex-col text-sm">
         <div>
-          往&nbsp;
+          往
           <span class="text-lg font-semibold text-tinted-primary">
             {{ item.route().dest() }}
           </span>
