@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import EtaItem from '@/components/EtaItem.vue'
 import {
@@ -9,6 +9,13 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import {
+  TagsInput,
+  TagsInputInput,
+  TagsInputItem,
+  TagsInputItemDelete,
+  TagsInputItemText,
+} from '@/components/ui/tags-input'
 
 import type { TEta } from '@/apis/base'
 import { getCurrentPosition } from '@/apis/geolocation'
@@ -17,7 +24,21 @@ import { Ok } from '@/lib/results'
 
 const kmb = new KmbApi()
 
+const searchQuery = ref<string[]>([])
+
+function evalSearchQuery(entry: TEta): boolean {
+  return searchQuery.value.every((q) => {
+    return entry.route().name().includes(q)
+      || entry.route().dest().includes(q)
+      || entry.station().name().includes(q)
+  })
+}
+
 const etaEntries = ref<TEta[]>([])
+
+const computedEtaEntries = computed(() => {
+  return etaEntries.value.filter(evalSearchQuery)
+})
 
 async function fetchData() {
   const pos = await getCurrentPosition()
@@ -28,11 +49,24 @@ async function fetchData() {
     return Ok()
   })
 }
+
 fetchData()
 </script>
 
 <template>
-  <div class="container mt-8">
+  <div class="flex flex-col gap-6 p-6">
+    <Card>
+      <CardContent class="pt-6">
+        <TagsInput v-model="searchQuery">
+          <TagsInputItem v-for="item in searchQuery" :key="item" :value="item">
+            <TagsInputItemText />
+            <TagsInputItemDelete />
+          </TagsInputItem>
+
+          <TagsInputInput placeholder="Type then press Enter to filter..." />
+        </TagsInput>
+      </CardContent>
+    </Card>
     <Card>
       <CardHeader>
         <CardTitle>
@@ -41,7 +75,7 @@ fetchData()
       </CardHeader>
       <CardContent>
         <template
-          v-for="(item, index) in etaEntries"
+          v-for="(item, index) in computedEtaEntries"
           :key="index"
         >
           <Separator />

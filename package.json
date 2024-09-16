@@ -13,6 +13,7 @@
   "dependencies": {
     "@hey-api/client-fetch": "^0.2.4",
     "@types/node": "^22.5.5",
+    "@vueuse/core": "^11.0.3",
     "breath-enum": "link:../breath-enum-ts",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
