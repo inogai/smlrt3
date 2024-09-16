@@ -102,22 +102,42 @@ fetchData()
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <template
-          v-for="entry in computedEtaEntries"
-          :key="entry.key"
-        >
-          <Separator />
-          <div class="p-2">
-            <EtaItem
-              :is-favourite="entry.isFavourite"
-              :item="entry.entry"
-              @update:is-favourite="val => {
-                etaEntries.find((e) => e.key === entry.key)!.isFavourite = val
-              }"
-            />
+        <TransitionGroup name="list">
+          <div
+            v-for="entry in computedEtaEntries"
+            :key="entry.key"
+            class="bg-card"
+          >
+            <Separator />
+            <div class="p-2">
+              <EtaItem
+                :is-favourite="entry.isFavourite"
+                :item="entry.entry"
+                @update:is-favourite="val => updateFavourite(entry.key, val)"
+              />
+            </div>
           </div>
-        </template>
+        </TransitionGroup>
       </CardContent>
     </Card>
   </div>
 </template>
+
+<style>
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease-in-out;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  max-height: 0;
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
+}
