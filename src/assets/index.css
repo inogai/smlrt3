@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  /* Set grow and shink to 0 */
+  * {
+    flex: 0 0 auto;
+  }
+
+  .flex.items-shrink > * {
+    flex-shrink: 1;
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;

@@ -107,7 +107,12 @@ fetchData()
 </script>
 
 <template>
-  <div class="flex flex-col gap-6 p-6">
+  <div
+    class="
+      flex flex-col gap-6
+      md:p-6
+    "
+  >
     <Card>
       <CardContent class="pt-6">
         <TagsInput v-model="searchQuery">
@@ -126,7 +131,7 @@ fetchData()
           即時到站時間
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent class="px-2">
         <TransitionGroup name="list">
           <div
             v-for="entry in computedEtaEntries"
