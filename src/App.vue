@@ -3,6 +3,7 @@ import { useStorage } from '@vueuse/core'
 import { computed, ref } from 'vue'
 
 import EtaItem from '@/components/EtaItem.vue'
+import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardContent,
@@ -129,7 +130,10 @@ fetchData()
     <Card>
       <CardHeader>
         <CardTitle>
-          即時到站時間
+          <div class="flex items-center gap-2">
+            即時到站時間
+            <Badge>Total: {{ computedEtaEntries.length }} </Badge>
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent class="px-2">
