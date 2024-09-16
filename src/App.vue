@@ -29,11 +29,19 @@ const kmb = new KmbApi()
 
 const searchQuery = ref<string[]>([])
 
+const favList = useStorage(
+  'favList',
+  new Set<string>(),
+  localStorage,
+  SetSerializer,
+)
+
 function evalSearchQuery(entry: Entry): boolean {
   return searchQuery.value.every((q) => {
     return entry.entry.route().name().includes(q)
       || entry.entry.route().dest().includes(q)
       || entry.entry.station().name().includes(q)
+      || favList.value.has(entry.key)
   })
 }
 
@@ -56,13 +64,6 @@ const computedEtaEntries = computed(() => {
     }))
     .sort((a, b) => b.precedance - a.precedance)
 })
-
-const favList = useStorage(
-  'favList',
-  new Set<string>(),
-  localStorage,
-  SetSerializer,
-)
 
 function updateFavourite(key: string, val: boolean) {
   const entry = etaEntries.value.find(e => e.key === key)
