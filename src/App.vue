@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useStorage } from '@vueuse/core'
 import { computed, ref } from 'vue'
 
 import EtaItem from '@/components/EtaItem.vue'
@@ -22,6 +23,7 @@ import { getCurrentPosition } from '@/apis/geolocation'
 import { KmbApi } from '@/apis/kmb'
 import { MAX_DISTANCE } from '@/env'
 import { Ok } from '@/lib/results'
+import { SetSerializer } from '@/lib/serializers'
 
 const kmb = new KmbApi()
 
@@ -55,22 +57,45 @@ const computedEtaEntries = computed(() => {
     .sort((a, b) => b.precedance - a.precedance)
 })
 
+const favList = useStorage(
+  'favList',
+  new Set<string>(),
+  localStorage,
+  SetSerializer,
+)
+
+function updateFavourite(key: string, val: boolean) {
+  const entry = etaEntries.value.find(e => e.key === key)
+
+  if (entry)
+    entry.isFavourite = val
+
+  if (val) {
+    favList.value.add(key)
+  }
+  else {
+    favList.value.delete(key)
+  }
+}
+
 async function fetchData() {
   const pos = await getCurrentPosition()
   const res = await kmb.getNearbyEtas(pos.coords.latitude, pos.coords.longitude)
 
   res.andThen((data) => {
     etaEntries.value.push(...data.map((entry) => {
+      const key = entry.route().name()
+        + entry.route().dest()
+        + entry.station().name()
+
       return {
         entry,
         distance: entry.station().distance({
           lat: pos.coords.latitude,
           lon: pos.coords.longitude,
         }),
-        key: entry.route().name()
-          + entry.route().dest()
-          + entry.station().name(),
-        isFavourite: false,
+        key,
+        isFavourite: favList.value.has(key),
       }
     }))
 
@@ -141,3 +166,4 @@ fetchData()
 .list-leave-active {
   position: absolute;
 }
+</style>
