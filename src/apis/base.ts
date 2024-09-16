@@ -12,6 +12,7 @@ export interface TStation {
 export interface TRoute {
   name: () => string
   dest: () => string
+  color: () => string
 }
 
 export interface TEta {

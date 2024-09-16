@@ -1,5 +1,6 @@
 import { attachPrototype } from '@/lib/class'
 import type { Eq, Hashable } from '@/lib/traits'
+import { cn } from '@/lib/utils'
 
 import type { TRoute } from '../base'
 
@@ -16,6 +17,34 @@ const implRouteForLrtRoute: TRoute = {
   },
   dest(this: LrtRoute): string {
     return this._dest
+  },
+  color(this: LrtRoute): string {
+    switch (this.route) {
+      case '505':
+        return cn(`bg-[#ef2d19]`)
+      case '507':
+        return cn(`bg-[#00ab4f]`)
+      case '610':
+        return cn(`bg-[#531b19]`)
+      case '614':
+        return cn(`bg-[#35ccf6]`)
+      case '614P':
+        return cn(`bg-[#ff8391]`)
+      case '615':
+        return cn(`bg-[#ffd939]`)
+      case '615P':
+        return cn(`bg-[#086285]`)
+      case '705':
+        return cn(`bg-[#d9eece]`)
+      case '706':
+        return cn(`bg-[#b07bbd]`)
+      case '751':
+        return cn(`bg-[#ff7d24]`)
+      case '761P':
+        return cn(`bg-[#582895]`)
+      default:
+        return cn(`bg-gray-400`)
+    }
   },
 }
 

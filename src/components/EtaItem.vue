@@ -38,9 +38,9 @@ function toggleFavourite() {
     <div class="flex flex-col justify-center">
       <div
         class="
-          flex w-12 justify-center rounded-full bg-red-600 text-sm font-semibold
-          text-white
+          flex w-12 justify-center rounded-full text-sm font-semibold text-white
         "
+        :class="item.route().color()"
       >
         {{ item.route().name() }}
       </div>

@@ -1,5 +1,6 @@
 import { attachPrototype } from '@/lib/class'
 import type { Eq, Hashable } from '@/lib/traits'
+import { cn } from '@/lib/utils'
 
 import type { TRoute } from '../base'
 import { isLwb } from './isLwb'
@@ -19,6 +20,9 @@ const prototype = {
   },
   dest(this: KmbRoute): string {
     return this._dest
+  },
+  color(this: KmbRoute): string {
+    return this.co === 'KMB' ? cn(`bg-[#ed151f]`) : cn(`bg-[#f36c2e]`)
   },
   equals(this: KmbRoute, other: KmbRoute): boolean {
     return this.hashSymbol() === other.hashSymbol()
