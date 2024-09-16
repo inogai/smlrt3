@@ -1,7 +1,7 @@
 import { type Client, createClient } from '@hey-api/client-fetch'
 
 import * as kmb from '@/clients/kmb'
-import { PROXY_URL } from '@/env'
+import { MAX_DISTANCE, PROXY_URL } from '@/env'
 import { cache } from '@/lib/cache'
 import { HashMap } from '@/lib/HashMap'
 import type { Result } from '@/lib/results'
@@ -136,10 +136,7 @@ export class KmbApi implements BaseApi {
 
   async getNearbyEtas(lat: number, lon: number):
   Promise<Result<KmbEta[], Error>> {
-    // 1 lat ~ 111 km
-    // 500 m = 0.0045
-    // 200 m = 0.001
-    const stops = await this.getNearbyStops(lat, lon, 0.0045)
+    const stops = await this.getNearbyStops(lat, lon, MAX_DISTANCE)
 
     return stops.andThenAwait(async (stops) => {
       const promises = stops.map(async stop => this.getStopEta(stop))

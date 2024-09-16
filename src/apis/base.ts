@@ -6,6 +6,7 @@ export interface TStation {
   name: () => string
   lat: () => number
   lon: () => number
+  distance: (coords: { lat: number, lon: number }) => number
 }
 
 export interface TRoute {
@@ -20,7 +21,6 @@ export interface TEta {
     val: EtaDescriptor
     rmk?: string
   }[]
-
 }
 
 export interface BaseApi {

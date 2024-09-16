@@ -1,3 +1,5 @@
+import { attachPrototype } from '@/lib/class'
+
 import type { TStation } from '../base'
 
 interface IKmbStation {
@@ -10,16 +12,10 @@ interface IKmbStation {
 export type KmbStation = IKmbStation & TStation
 
 export function KmbStation(props: IKmbStation): KmbStation {
-  const ret = {
-    ...props,
-  }
-
-  Object.setPrototypeOf(ret, KmbStation.prototype)
-
-  return ret as IKmbStation & typeof KmbStation.prototype
+  return attachPrototype({ ...props }, KmbStation.prototype)
 }
 
-KmbStation.prototype = {
+const implStationForKmbStation: TStation = {
   name(this: KmbStation) {
     return this._name
   },
@@ -33,3 +29,5 @@ KmbStation.prototype = {
     return Math.sqrt((this.lat() - lat) ** 2 + (this.lon() - lon) ** 2)
   },
 }
+
+KmbStation.prototype = implStationForKmbStation
