@@ -2,7 +2,6 @@ import { type Client, createClient } from '@hey-api/client-fetch'
 
 import * as lrt from '@/clients/lrt'
 import { MAX_DISTANCE, PROXY_URL } from '@/env'
-import { cache } from '@/lib/cache'
 import { HashMap } from '@/lib/HashMap'
 import type { Result } from '@/lib/results'
 import { Err, Ok } from '@/lib/results'
