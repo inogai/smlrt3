@@ -63,7 +63,7 @@ function toggleFavourite() {
     <div class="w-2 grow" />
     <!-- ETA -->
     <div class="flex flex-col justify-center">
-      <div class="flex max-w-28 flex-row flex-nowrap items-baseline">
+      <div class="flex max-w-32 flex-row flex-nowrap items-baseline">
         <div class="min-w-0 shrink overflow-x-hidden text-ellipsis text-nowrap">
           <span
             v-for="(eta, ind) in item.items()"
@@ -72,7 +72,7 @@ function toggleFavourite() {
             <span
               v-if="isKind(eta.val, EtaDescriptor.JustDeparted)" class="text-sm"
             >
-              正在離開
+              已開出
             </span>
             <span
               v-else-if="isKind(eta.val, EtaDescriptor.MinutesLeft)"
