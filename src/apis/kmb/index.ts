@@ -87,7 +87,7 @@ export class KmbApi implements BaseApi {
           eta = EtaDescriptor.JustDeparted
         }
         else {
-          const minutes = Math.floor(diff / 60 / 1000)
+          const minutes = Math.ceil(diff / 60 / 1000)
           eta = EtaDescriptor.MinutesLeft(minutes)
         }
       }
