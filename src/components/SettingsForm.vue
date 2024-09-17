@@ -4,11 +4,14 @@ import { useForm } from 'vee-validate'
 import { ref, watch } from 'vue'
 
 import { AutoForm } from '@/components/ui/auto-form'
+import { useToast } from '@/components/ui/toast'
 
 import type { ISettings } from '@/settings'
 import { settingsSchema, useSettings } from '@/settings'
 
 defineEmits(['submit'])
+
+const { toast } = useToast()
 
 const triggerSubmit = defineModel<boolean>('triggerSubmit')
 
@@ -39,6 +42,11 @@ function submit() {
 
 function onSubmit(values: Record<string, unknown>) {
   settings.value = values as ISettings
+
+  toast({
+    title: 'Settings updated',
+    variant: 'default',
+  })
 }
 </script>
 
