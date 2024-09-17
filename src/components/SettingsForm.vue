@@ -29,6 +29,7 @@ const settings = useSettings()
 
 const form = useForm({
   validationSchema: toTypedSchema(settingsSchema),
+  initialValues: settings.value,
 })
 
 const virtualSubmit = ref<HTMLButtonElement | null>(null)
