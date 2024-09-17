@@ -1,6 +1,6 @@
 import { attachPrototype } from '@/lib/class'
 
-import type { TStation } from '../base'
+import { implStation, type TStation } from '../base'
 
 interface ILrtStation {
   id: number
@@ -15,7 +15,7 @@ export function LrtStation(props: ILrtStation): LrtStation {
   return attachPrototype({ ...props }, LrtStation.prototype)
 }
 
-const implStationForKmbStation: TStation = {
+const implStationForKmbStation: TStation = attachPrototype({
   name(this: LrtStation) {
     return this._name
   },
@@ -25,9 +25,6 @@ const implStationForKmbStation: TStation = {
   lon(this: LrtStation) {
     return this._lon
   },
-  distance(this: LrtStation, { lat, lon }: { lat: number, lon: number }) {
-    return Math.sqrt((this.lat() - lat) ** 2 + (this.lon() - lon) ** 2)
-  },
-}
+}, implStation)
 
 LrtStation.prototype = implStationForKmbStation

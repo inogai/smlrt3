@@ -24,9 +24,9 @@ import type { TEta } from '@/apis/base'
 import { getCurrentPosition } from '@/apis/geolocation'
 import { KmbApi } from '@/apis/kmb'
 import { LrtApi } from '@/apis/lrt'
-import { MAX_DISTANCE } from '@/env'
 import { Ok } from '@/lib/results'
 import { SetSerializer } from '@/lib/serializers'
+import { useSettings } from '@/settings'
 
 const kmb = new KmbApi()
 const lrt = new LrtApi()
@@ -39,6 +39,8 @@ const favList = useStorage(
   localStorage,
   SetSerializer,
 )
+
+const settings = useSettings()
 
 function evalSearchQuery(entry: Entry): boolean {
   return searchQuery.value.every((q) => {
@@ -63,7 +65,7 @@ const computedEtaEntries = computed(() => {
     .filter(evalSearchQuery)
     .map(entry => ({
       ...entry,
-      precedance: MAX_DISTANCE - entry.distance
+      precedance: -entry.distance / settings.value.maxDistance
         + (entry.isFavourite ? 1 : 0),
     }))
     .sort((a, b) => b.precedance - a.precedance)
@@ -100,6 +102,7 @@ async function fetchData() {
   apis.map(api => api.getNearbyEtas(
     pos.coords.latitude,
     pos.coords.longitude,
+    settings.value.maxDistance,
   )).forEach(async (res) => {
     (await res).andThen((data) => {
       etaEntries.value.push(...data.map((entry) => {

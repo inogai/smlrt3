@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 export const RouteName = {
   HOME: 'home',
+  SETTINGS: 'settings',
 }
 
 export const router = createRouter({

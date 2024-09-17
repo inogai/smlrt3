@@ -1,6 +1,6 @@
 import { attachPrototype } from '@/lib/class'
 
-import type { TStation } from '../base'
+import { implStation, type TStation } from '../base'
 
 interface IKmbStation {
   id: string
@@ -15,7 +15,7 @@ export function KmbStation(props: IKmbStation): KmbStation {
   return attachPrototype({ ...props }, KmbStation.prototype)
 }
 
-const implStationForKmbStation: TStation = {
+const implStationForKmbStation: TStation = attachPrototype({
   name(this: KmbStation) {
     return this._name
   },
@@ -25,9 +25,6 @@ const implStationForKmbStation: TStation = {
   lon(this: KmbStation) {
     return this._lon
   },
-  distance(this: KmbStation, { lat, lon }: { lat: number, lon: number }) {
-    return Math.sqrt((this.lat() - lat) ** 2 + (this.lon() - lon) ** 2)
-  },
-}
+}, implStation)
 
 KmbStation.prototype = implStationForKmbStation
