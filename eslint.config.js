@@ -65,6 +65,16 @@ export default antfu(
   },
   ...tailwindcss.configs['flat/recommended'],
   {
+    rules: {
+      'tailwindcss/no-custom-classname': ['warn', {
+        callees: ['classnames', 'clsx', 'ctl', 'cva', 'tv', 'cn'],
+        whitelist: [
+          'i\\-mdi\\-.*',
+        ],
+      }],
+    },
+  },
+  {
     plugins: {
       'readable-tailwind': eslintPluginReadableTailwind,
     },

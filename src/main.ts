@@ -1,4 +1,5 @@
 import '@/assets/index.css'
+import 'virtual:uno.css'
 
 import VWave from 'v-wave'
 import { createApp } from 'vue'
