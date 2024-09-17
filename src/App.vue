@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useStorage } from '@vueuse/core'
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow'
 import { computed, ref } from 'vue'
 
 import EtaItem from '@/components/EtaItem.vue'
@@ -68,6 +69,14 @@ const computedEtaEntries = computed(() => {
     .sort((a, b) => b.precedance - a.precedance)
 })
 
+const lastUpdate = ref<Date | null>(null)
+
+const lastUpdateStr = computed(() => {
+  return lastUpdate.value
+    ? `${formatDistanceToNow(lastUpdate.value)} ago`
+    : 'Never'
+})
+
 function updateFavourite(key: string, val: boolean) {
   const entry = etaEntries.value.find(e => e.key === key)
 
@@ -85,6 +94,8 @@ function updateFavourite(key: string, val: boolean) {
 async function fetchData() {
   const pos = await getCurrentPosition()
   const apis = [kmb, lrt]
+
+  lastUpdate.value = new Date()
 
   apis.map(api => api.getNearbyEtas(
     pos.coords.latitude,
@@ -140,6 +151,9 @@ fetchData()
           <div class="flex items-center gap-2">
             即時到站時間
             <Badge>Total: {{ computedEtaEntries.length }} </Badge>
+            <Badge class="bg-secondary text-secondary-foreground">
+              Last Updated: {{ lastUpdateStr }}
+            </Badge>
           </div>
         </CardTitle>
       </CardHeader>

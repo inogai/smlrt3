@@ -17,6 +17,7 @@
     "breath-enum": "link:../breath-enum-ts",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "date-fns": "^4.0.0",
     "lucide-vue-next": "^0.441.0",
     "radix-vue": "^1.9.5",
     "tailwind-merge": "^2.5.2",
