@@ -21,8 +21,7 @@ export type LrtEta = ILrtEta & TEta & {
       val: EtaDescriptor
       trainLength: number
       rmk?: string
-    },
-    etaSeq: number
+    }
   ) => void
 }
 
