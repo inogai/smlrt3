@@ -4,6 +4,7 @@ import { formatDistanceToNow } from 'date-fns/formatDistanceToNow'
 import { computed, ref } from 'vue'
 
 import EtaItem from '@/components/EtaItem.vue'
+import SettingsDialog from '@/components/SettingsDialog.vue'
 import { Badge } from '@/components/ui/badge'
 import {
   Card,
@@ -157,6 +158,7 @@ fetchData()
             <Badge class="bg-secondary text-secondary-foreground">
               Last Updated: {{ lastUpdateStr }}
             </Badge>
+            <SettingsDialog />
           </div>
         </CardTitle>
       </CardHeader>
