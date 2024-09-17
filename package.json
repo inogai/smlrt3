@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@hey-api/client-fetch": "^0.2.4",
+    "@internationalized/date": "^3.5.5",
     "@types/node": "^22.5.5",
+    "@vee-validate/zod": "^4.13.2",
     "@vueuse/core": "^11.0.3",
     "breath-enum": "link:../breath-enum-ts",
     "class-variance-authority": "^0.7.0",
@@ -23,8 +25,10 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "v-wave": "^3.0.2",
+    "vee-validate": "^4.13.2",
     "vue": "^3.4.37",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.6.0",
