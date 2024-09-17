@@ -28,8 +28,15 @@ function close() {
 
 <template>
   <Dialog v-model:open="open">
-    <DialogTrigger>
-      Settings
+    <DialogTrigger
+      class="
+        inline-flex items-center rounded-md border bg-primary p-0.5 text-xs
+        text-primary-foreground
+      "
+    >
+      <div class="flex size-4 items-center justify-center">
+        <i class="i-mdi-settings" />
+      </div>
     </DialogTrigger>
 
     <DialogContent>
