@@ -30,17 +30,11 @@ export class LrtApi implements BaseApi {
   }
 
   async getStopEta(stop: LrtStation): Promise<Result<LrtEta[], Error>> {
-    const response = (
-      await cache(
-        `lrt_stop-eta_{stop.id}`,
-        () =>
-          lrt.getV1TransportMtrLrtGetSchedule({
-            query: { station_id: stop.id },
-            client: this.client,
-          }),
-        this.fetchEtaDelay,
-      )
-    ).value
+    const response
+      = await lrt.getV1TransportMtrLrtGetSchedule({
+        query: { station_id: stop.id },
+        client: this.client,
+      })
 
     if (!response.data) {
       return Err(new Error('Failed to fetch KMB stop ETA'))

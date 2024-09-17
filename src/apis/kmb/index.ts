@@ -54,17 +54,11 @@ export class KmbApi implements BaseApi {
   }
 
   async getStopEta(stop: KmbStation): Promise<Result<KmbEta[], Error>> {
-    const response = (
-      await cache(
-        `kmb_routes_${stop.id}`,
-        () =>
-          kmb.getV1TransportKmbStopEtaByStopId({
-            path: { stop_id: stop.id },
-            client: this.client,
-          }),
-        this.fetchEtaDelay,
-      )
-    ).value
+    const response
+      = await kmb.getV1TransportKmbStopEtaByStopId({
+        path: { stop_id: stop.id },
+        client: this.client,
+      })
 
     if (!response.data) {
       return Err(new Error('Failed to fetch KMB stop ETA'))
