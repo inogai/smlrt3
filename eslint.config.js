@@ -9,6 +9,7 @@ export default antfu(
     type: 'app',
     stylistic: {
       overrides: {
+        'style/arrow-parens': ['error', 'always'],
         'style/max-len': ['error', { code: 80 }],
         'style/padded-blocks': ['error', 'never'],
         'style/padding-line-between-statements': 'error',
@@ -61,6 +62,7 @@ export default antfu(
       }],
       'simple-import-sort/exports': 'error',
       'perfectionist/sort-imports': 'off',
+      'perfectionist/sort-named-imports': 'off',
     },
   },
   ...tailwindcss.configs['flat/recommended'],
