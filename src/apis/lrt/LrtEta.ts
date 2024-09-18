@@ -35,6 +35,9 @@ const implEtaForLrtEta: TEta = {
   items(this: LrtEta) {
     return this._items
   },
+  co(this: LrtEta) {
+    return 'LRT'
+  },
 }
 
 const LrtEtaPrototype

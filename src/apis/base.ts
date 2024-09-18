@@ -31,6 +31,7 @@ export interface TEta {
     val: EtaDescriptor
     rmk?: string
   }[]
+  co: () => string
 }
 
 export const implStation: Pick<TStation, 'distance'> = {

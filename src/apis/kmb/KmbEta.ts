@@ -35,6 +35,9 @@ const implEtaForKmbEta: TEta = {
   items(this: KmbEta) {
     return this._items
   },
+  co(this: KmbEta) {
+    return 'KMB'
+  },
 }
 
 const KmbEtaPrototype
