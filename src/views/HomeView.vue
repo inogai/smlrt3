@@ -25,6 +25,7 @@ import type { TEta } from '@/apis/base'
 import { getCurrentPosition } from '@/apis/geolocation'
 import { KmbApi } from '@/apis/kmb'
 import { LrtApi } from '@/apis/lrt'
+import { EtaFilter } from '@/lib/EtaFilter'
 import { Ok } from '@/lib/results'
 import { SetSerializer } from '@/lib/serializers'
 import { useSettings } from '@/settings'
@@ -44,11 +45,10 @@ const favList = useStorage(
 const settings = useSettings()
 
 function evalSearchQuery(entry: Entry): boolean {
-  return searchQuery.value.every((q) => {
-    return entry.entry.route().name().includes(q)
-      || entry.entry.route().dest().includes(q)
-      || entry.entry.station().name().includes(q)
-      || favList.value.has(entry.key)
+  return searchQuery.value.map(
+    (q) => EtaFilter.parse(q),
+  ).every((q) => {
+    return EtaFilter.prototype.evaluate.call(q, entry.entry)
   })
 }
 
@@ -64,7 +64,7 @@ const etaEntries = ref<Entry[]>([])
 const computedEtaEntries = computed(() => {
   return etaEntries.value
     .filter(evalSearchQuery)
-    .map(entry => ({
+    .map((entry) => ({
       ...entry,
       precedance: -entry.distance / settings.value.maxDistance
         + (entry.isFavourite ? 1 : 0),
@@ -81,7 +81,7 @@ const lastUpdateStr = computed(() => {
 })
 
 function updateFavourite(key: string, val: boolean) {
-  const entry = etaEntries.value.find(e => e.key === key)
+  const entry = etaEntries.value.find((e) => e.key === key)
 
   if (entry)
     entry.isFavourite = val
@@ -100,7 +100,7 @@ async function fetchData() {
 
   lastUpdate.value = new Date()
 
-  apis.map(api => api.getNearbyEtas(
+  apis.map((api) => api.getNearbyEtas(
     pos.coords.latitude,
     pos.coords.longitude,
     settings.value.maxDistance,
