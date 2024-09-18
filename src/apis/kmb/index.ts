@@ -27,19 +27,21 @@ export class KmbApi implements BaseApi {
   async getStations(): Promise<Result<KmbStation[], Error>> {
     const cached = await cache(
       'kmb_stop_list',
-      () => kmb.getV1TransportKmbStop({ client: this.client }),
+      async () => (
+        await kmb.getV1TransportKmbStop({ client: this.client })
+      ).data,
       this.fetchStopListDelay,
     )
 
     const response = cached.value
 
-    if (!response.data) {
+    if (!response) {
       return Err(new Error('Failed to fetch KMB stop list'))
     }
 
     const ret: KmbStation[] = []
 
-    for (const stop of response.data.data) {
+    for (const stop of response.data) {
       ret.push(
         KmbStation({
           id: stop.stop,
