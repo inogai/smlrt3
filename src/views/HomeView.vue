@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStorage } from '@vueuse/core'
+import { useIntervalFn, useStorage } from '@vueuse/core'
 import { formatDistanceToNow } from 'date-fns/formatDistanceToNow'
 import { computed, ref } from 'vue'
 
@@ -59,7 +59,10 @@ interface Entry {
   isFavourite: boolean
 }
 
-const etaEntries = ref<Entry[]>([])
+const _etaEntries = ref<Record<string, Entry[]>>({})
+const etaEntries = computed<Entry[]>(
+  () => Object.values(_etaEntries.value).flat(),
+)
 
 const computedEtaEntries = computed(() => {
   return etaEntries.value
@@ -96,17 +99,19 @@ function updateFavourite(key: string, val: boolean) {
 
 async function fetchData() {
   const pos = await getCurrentPosition()
-  const apis = [kmb, lrt]
+  const apis = { kmb, lrt }
 
   lastUpdate.value = new Date()
 
-  apis.map((api) => api.getNearbyEtas(
-    pos.coords.latitude,
-    pos.coords.longitude,
-    settings.value.maxDistance,
-  )).forEach(async (res) => {
-    (await res).andThen((data) => {
-      etaEntries.value.push(...data.map((entry) => {
+  Object.entries(apis).forEach(async ([apiName, api]) => {
+    const res = await api.getNearbyEtas(
+      pos.coords.latitude,
+      pos.coords.longitude,
+      settings.value.maxDistance,
+    )
+
+    res.andThen((data) => {
+      _etaEntries.value[apiName] = data.map((entry) => {
         const key = entry.route().name()
           + entry.route().dest()
           + entry.station().name()
@@ -120,14 +125,18 @@ async function fetchData() {
           key,
           isFavourite: favList.value.has(key),
         }
-      }))
+      })
 
       return Ok()
     })
   })
 }
 
-fetchData()
+useIntervalFn(() => {
+  fetchData()
+}, 20 * 1000, {
+  immediateCallback: true,
+})
 </script>
 
 <template>
