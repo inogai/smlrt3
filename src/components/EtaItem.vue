@@ -30,7 +30,13 @@ function toggleFavourite() {
         }"
         @click="toggleFavourite"
       >
-        {{ isFavourite ? '★' : '☆' }}
+        <i
+          class="text-xl"
+          :class="{
+            'i-mdi-star': isFavourite,
+            'i-mdi-star-outline': !isFavourite,
+          }"
+        />
       </div>
     </div>
     <div class="w-1" />
