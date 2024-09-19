@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useIntervalFn, useStorage } from '@vueuse/core'
-import { formatDistanceToNow } from 'date-fns/formatDistanceToNow'
+import { formatDate } from 'date-fns'
 import { computed, ref } from 'vue'
 
 import EtaItem from '@/components/EtaItem.vue'
@@ -78,9 +78,10 @@ const computedEtaEntries = computed(() => {
 const lastUpdate = ref<Date | null>(null)
 
 const lastUpdateStr = computed(() => {
-  return lastUpdate.value
-    ? `${formatDistanceToNow(lastUpdate.value)} ago`
-    : 'Never'
+  if (!lastUpdate.value)
+    return 'never'
+
+  return formatDate(lastUpdate.value, 'HH:mm:ss')
 })
 
 function updateFavourite(key: string, val: boolean) {
