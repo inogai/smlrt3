@@ -164,7 +164,10 @@ useIntervalFn(() => {
   >
     <Card>
       <CardContent class="pt-6">
-        <EtaFilterInput v-model="searchQuery" />
+        <EtaFilterInput
+          v-model="searchQuery"
+          :eta-entries="computedEtaEntries"
+        />
       </CardContent>
     </Card>
     <Card>

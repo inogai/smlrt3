@@ -28,11 +28,19 @@ import {
   TagsInputItemDelete,
 } from '@/components/ui/tags-input'
 
+import type { TEta } from '@/apis/base'
 import { EtaFilter } from '@/lib/EtaFilter'
+import { splitCamelCase, toTitleCase } from '@/lib/string'
 import type { Keyed } from '@/lib/traits/Keyed'
 import { ToKeyed } from '@/lib/traits/Keyed'
 
 import { Badge } from './ui/badge'
+
+interface Entry { entry: TEta }
+
+const props = defineProps<{
+  etaEntries: Entry[]
+}>()
 
 const searchQuery = defineModel<(EtaFilter & Keyed)[]>({
   required: true,
@@ -42,10 +50,15 @@ const dropdownOpen = ref(true)
 
 const inputText = ref('')
 
+function unique<T>(arr: T[]): T[] {
+  return Array.from(new Set(arr))
+}
+
 interface SuggestionItem {
   value: string
   badges?: string[]
-  desc: string
+  desc?: string
+  action?: 'accept' | 'compose'
 }
 
 const suggestions = computed(() => {
@@ -60,14 +73,57 @@ const suggestions = computed(() => {
     ]
   }
 
+  for (const [kind, cb] of Object.entries({
+    stop: (entry: Entry) => entry.entry.station().name(),
+    route: (entry: Entry) => entry.entry.route().name(),
+    dest: (entry: Entry) => entry.entry.route().dest(),
+    co: (entry: Entry) => entry.entry.co(),
+  })) {
+    if (inputText.value.startsWith(`${kind}:`)) {
+      ret[
+        toTitleCase(splitCamelCase(kind))
+      ] = unique(props.etaEntries
+        .map(cb))
+        .filter((value) => value.includes(inputText.value.slice(
+          kind.length + 1,
+        )))
+        .map((value) => ({
+          value: `${kind}:${value}`,
+          action: 'compose',
+          desc: 'Compose filter',
+        }))
+    }
+  }
+
   return ret
 })
 
 const inputEl = ref<HTMLInputElement | null>(null)
 const cmdGroupEl = ref<HTMLElement | null>(null)
 
+function handleCommandItem(item: SuggestionItem) {
+  switch (item.action) {
+    case 'compose':
+      handleCommandItemCompose(item)
+      break
+
+    case 'accept':
+    default:
+      handleCommandItemAccept(item)
+  }
+}
+
 function handleCommandItemAccept(item: SuggestionItem) {
   inputText.value = item.value
+
+  if (inputEl.value) {
+    inputEl.value.focus()
+  }
+}
+
+function handleCommandItemCompose(item: SuggestionItem) {
+  searchQuery.value.push(ToKeyed(EtaFilter.parse(item.value)))
+  inputText.value = ''
 
   if (inputEl.value) {
     inputEl.value.focus()
@@ -143,7 +199,7 @@ function handleCommandItemAccept(item: SuggestionItem) {
               :key="item.value"
               :value="item.value"
               class="flex items-center"
-              @click.prevent="handleCommandItemAccept(item)"
+              @click.prevent="handleCommandItem(item)"
             >
               <div> {{ item.value }}</div>
               <div class="w-4" />
