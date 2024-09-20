@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useIntervalFn, useStorage } from '@vueuse/core'
+import { EnumInstanceProto } from 'breath-enum/dist/lib/EnumInstance'
 import { formatDate } from 'date-fns'
 import { computed, ref } from 'vue'
 
@@ -18,7 +19,6 @@ import {
   TagsInputInput,
   TagsInputItem,
   TagsInputItemDelete,
-  TagsInputItemText,
 } from '@/components/ui/tags-input'
 
 import type { TEta } from '@/apis/base'
@@ -28,12 +28,35 @@ import { LrtApi } from '@/apis/lrt'
 import { EtaFilter } from '@/lib/EtaFilter'
 import { Ok } from '@/lib/results'
 import { SetSerializer } from '@/lib/serializers'
+import type { Keyed } from '@/lib/traits/Keyed'
+import { ToKeyed } from '@/lib/traits/Keyed'
 import { useSettings } from '@/settings'
 
 const kmb = new KmbApi()
 const lrt = new LrtApi()
 
-const searchQuery = ref<string[]>([])
+const searchQuery = useStorage(
+  'searchQuery',
+  [] as (EtaFilter & Keyed)[],
+  localStorage,
+  {
+    serializer: {
+      read: (str: string) => {
+        const arr = JSON.parse(str)
+
+        if (!Array.isArray(arr))
+          return []
+
+        arr.forEach((item: EtaFilter & Keyed) => {
+          Object.setPrototypeOf(item, EnumInstanceProto)
+        })
+
+        return arr as (EtaFilter & Keyed)[]
+      },
+      write: JSON.stringify,
+    },
+  },
+)
 
 const favList = useStorage(
   'favList',
@@ -45,9 +68,7 @@ const favList = useStorage(
 const settings = useSettings()
 
 function evalSearchQuery(entry: Entry): boolean {
-  return searchQuery.value.map(
-    (q) => EtaFilter.parse(q),
-  ).every((q) => {
+  return searchQuery.value.every((q) => {
     return EtaFilter.prototype.evaluate.call(q, entry.entry)
   })
 }
@@ -149,10 +170,37 @@ useIntervalFn(() => {
   >
     <Card>
       <CardContent class="pt-6">
-        <TagsInput v-model="searchQuery">
-          <TagsInputItem v-for="item in searchQuery" :key="item" :value="item">
-            <TagsInputItemText />
-            <TagsInputItemDelete />
+        <TagsInput
+          v-model="searchQuery"
+          :convert-value="str => ToKeyed(EtaFilter.parse(str))"
+          :display-value="() => ''"
+        >
+          <TagsInputItem
+            v-for="item in searchQuery"
+            :key="item.key"
+            class="px-0.5"
+            :class="EtaFilter.prototype.colorClass.call(item)"
+            :value="item"
+            as-child
+          >
+            <div class="flex">
+              <div class="px-1 font-semibold">
+                {{ item.kind.toUpperCase() }}
+              </div>
+              <div class="w-0.5" />
+              <div
+                class="
+                  flex items-center rounded-r-[calc(var(--radius)-6px)]
+                  bg-secondary pl-1.5 text-secondary-foreground
+                "
+              >
+                <div>
+                  {{ item.value }}
+                </div>
+                <div class="w-1" />
+                <TagsInputItemDelete />
+              </div>
+            </div>
           </TagsInputItem>
 
           <TagsInputInput placeholder="Type then press Enter to filter..." />

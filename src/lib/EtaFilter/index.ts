@@ -3,6 +3,8 @@ import { Enum, match, Type as $ } from 'breath-enum'
 
 import type { TEta } from '@/apis/base'
 
+import { cn } from '../utils'
+
 const _EtaFilter = Enum({
   Text: $<string>,
   Dest: $<string>,
@@ -37,6 +39,16 @@ export const EtaFilter = Object.assign(_EtaFilter, {
   },
 
   prototype: {
+    colorClass(this: EtaFilter): string {
+      return match(this)({
+        Text: () => cn`bg-gray-200`,
+        Dest: () => cn`bg-blue-600 text-white`,
+        Route: () => cn`bg-yellow-600 text-white`,
+        Stop: () => cn`bg-red-600 text-white`,
+        Co: () => cn`bg-purple-500 text-white`,
+        Not: () => cn`bg-gray-700 text-white`,
+      })
+    },
     evaluate(this: EtaFilter, eta: TEta): boolean {
       return match(this)({
         Text: (val) => {
