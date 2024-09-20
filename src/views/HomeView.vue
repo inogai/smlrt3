@@ -4,6 +4,7 @@ import { EnumInstanceProto } from 'breath-enum/dist/lib/EnumInstance'
 import { formatDate } from 'date-fns'
 import { computed, ref } from 'vue'
 
+import EtaFilterInput from '@/components/EtaFilterInput.vue'
 import EtaItem from '@/components/EtaItem.vue'
 import SettingsDialog from '@/components/SettingsDialog.vue'
 import { Badge } from '@/components/ui/badge'
@@ -14,12 +15,6 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import {
-  TagsInput,
-  TagsInputInput,
-  TagsInputItem,
-  TagsInputItemDelete,
-} from '@/components/ui/tags-input'
 
 import type { TEta } from '@/apis/base'
 import { getCurrentPosition } from '@/apis/geolocation'
@@ -29,7 +24,6 @@ import { EtaFilter } from '@/lib/EtaFilter'
 import { Ok } from '@/lib/results'
 import { SetSerializer } from '@/lib/serializers'
 import type { Keyed } from '@/lib/traits/Keyed'
-import { ToKeyed } from '@/lib/traits/Keyed'
 import { useSettings } from '@/settings'
 
 const kmb = new KmbApi()
@@ -170,41 +164,7 @@ useIntervalFn(() => {
   >
     <Card>
       <CardContent class="pt-6">
-        <TagsInput
-          v-model="searchQuery"
-          :convert-value="str => ToKeyed(EtaFilter.parse(str))"
-          :display-value="() => ''"
-        >
-          <TagsInputItem
-            v-for="item in searchQuery"
-            :key="item.key"
-            class="px-0.5"
-            :class="EtaFilter.prototype.colorClass.call(item)"
-            :value="item"
-            as-child
-          >
-            <div class="flex">
-              <div class="px-1 font-semibold">
-                {{ item.kind.toUpperCase() }}
-              </div>
-              <div class="w-0.5" />
-              <div
-                class="
-                  flex items-center rounded-r-[calc(var(--radius)-6px)]
-                  bg-secondary pl-1.5 text-secondary-foreground
-                "
-              >
-                <div>
-                  {{ item.value }}
-                </div>
-                <div class="w-1" />
-                <TagsInputItemDelete />
-              </div>
-            </div>
-          </TagsInputItem>
-
-          <TagsInputInput placeholder="Type then press Enter to filter..." />
-        </TagsInput>
+        <EtaFilterInput v-model="searchQuery" />
       </CardContent>
     </Card>
     <Card>
