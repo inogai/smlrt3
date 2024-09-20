@@ -50,6 +50,8 @@ export default antfu(
           // Things that start with a letter (or digit or underscore),
           // or `@` followed by a letter.
           ['^@?\\w'],
+          // External Vue Components Import
+          ['^radix-vue'],
           // Vue Components Import
           ['\\.vue$', '^@/components/ui/'],
           // Absolute imports and other imports such as Vue-style `@/foo`.
