@@ -9,6 +9,9 @@ export default antfu(
     type: 'app',
     stylistic: {
       overrides: {
+        'dot-notation': ['warn', {
+          allowPattern: '^[A-Z]',
+        }],
         'style/arrow-parens': ['error', 'always'],
         'style/max-len': ['error', { code: 80 }],
         'style/padded-blocks': ['error', 'never'],
