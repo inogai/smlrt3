@@ -3,19 +3,15 @@ import { computed, ref } from 'vue'
 
 import {
   ComboboxInput,
-  ComboboxTrigger,
   PopoverAnchor,
 } from 'radix-vue'
 
 import {
   Command,
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from '@/components/ui/command'
 import {
   Popover,
