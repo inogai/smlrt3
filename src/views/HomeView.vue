@@ -39,7 +39,7 @@ const favList = useStorage(
   'favList',
   new Set<string>(),
   localStorage,
-  SetSerializer,
+  { serializer: SetSerializer },
 )
 
 const settings = useSettings()
