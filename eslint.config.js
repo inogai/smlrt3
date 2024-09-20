@@ -81,6 +81,7 @@ export default antfu(
       'readable-tailwind': eslintPluginReadableTailwind,
     },
     rules: {
+      'tailwindcss/classnames-order': 'off',
       ...eslintPluginReadableTailwind.configs.warning.rules,
       ...eslintPluginReadableTailwind.configs.error.rules,
       'readable-tailwind/multiline': ['error', {
