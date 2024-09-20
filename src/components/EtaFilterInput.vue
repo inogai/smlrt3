@@ -180,22 +180,31 @@ function handleBlur(ev: FocusEvent) {
             </div>
           </TagsInputItem>
 
-          <ComboboxInput class="grow" as-child>
-            <TagsInputInput
-              placeholder="Type then press Enter to filter..."
-              as-child
-            >
-              <input
-                ref="inputEl"
-                :value="inputText"
-                @input="ev => inputText = (
-                  ev.target as HTMLInputElement | null
-                )?.value ?? ''"
-                @focus="dropdownOpen = true"
-                @blur="handleBlur"
+          <div class="flex grow items-center">
+            <ComboboxInput class="grow" as-child>
+              <TagsInputInput
+                placeholder="Type then press Enter to filter..."
+                as-child
               >
-            </TagsInputInput>
-          </ComboboxInput>
+                <input
+                  ref="inputEl"
+                  :value="inputText"
+                  @input="ev => inputText = (
+                    ev.target as HTMLInputElement | null
+                  )?.value ?? ''"
+                  @focus="dropdownOpen = true"
+                  @blur="handleBlur"
+                >
+              </TagsInputInput>
+            </ComboboxInput>
+
+            <div
+              class="text-xl i-mdi-trash cursor-pointer opacity-50"
+              role="button"
+              aria-label="Clear all filters"
+              @click="searchQuery = []"
+            />
+          </div>
         </TagsInput>
       </PopoverAnchor>
 
