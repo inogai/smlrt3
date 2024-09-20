@@ -46,7 +46,7 @@ const searchQuery = defineModel<(EtaFilter & Keyed)[]>({
   required: true,
 })
 
-const dropdownOpen = ref(true)
+const dropdownOpen = ref(false)
 
 const inputText = ref('')
 
@@ -99,7 +99,7 @@ const suggestions = computed(() => {
 })
 
 const inputEl = ref<HTMLInputElement | null>(null)
-const cmdGroupEl = ref<HTMLElement | null>(null)
+const popoverContentEl = ref<HTMLElement | null>(null)
 
 function handleCommandItem(item: SuggestionItem) {
   switch (item.action) {
@@ -127,6 +127,18 @@ function handleCommandItemCompose(item: SuggestionItem) {
 
   if (inputEl.value) {
     inputEl.value.focus()
+  }
+}
+
+function handleBlur(ev: FocusEvent) {
+  if (!ev.relatedTarget || !popoverContentEl.value) {
+    dropdownOpen.value = false
+    return
+  }
+
+  if (popoverContentEl.value.contains
+    && !popoverContentEl.value.contains(ev.relatedTarget as Node)) {
+    dropdownOpen.value = false
   }
 }
 </script>
@@ -168,7 +180,7 @@ function handleCommandItemCompose(item: SuggestionItem) {
             </div>
           </TagsInputItem>
 
-          <ComboboxInput class="" placeholder="aa" as-child>
+          <ComboboxInput class="grow" as-child>
             <TagsInputInput
               placeholder="Type then press Enter to filter..."
               as-child
@@ -179,19 +191,24 @@ function handleCommandItemCompose(item: SuggestionItem) {
                 @input="ev => inputText = (
                   ev.target as HTMLInputElement | null
                 )?.value ?? ''"
+                @focus="dropdownOpen = true"
+                @blur="handleBlur"
               >
             </TagsInputInput>
           </ComboboxInput>
         </TagsInput>
       </PopoverAnchor>
 
-      <PopoverContent class="w-[--radix-popper-anchor-width] px-2 py-0">
+      <PopoverContent
+        ref="popoverContentEl"
+        class="w-[--radix-popper-anchor-width] px-2 py-0"
+        @blur="handleBlur"
+      >
         <CommandList>
           <CommandEmpty>No suggestion.</CommandEmpty>
           <CommandGroup
             v-for="(group, groupTitle) in suggestions"
             :key="groupTitle"
-            ref="cmdGroupEl"
             :heading="groupTitle"
           >
             <CommandItem
