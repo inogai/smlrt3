@@ -2,7 +2,7 @@ import { useStorage } from '@vueuse/core'
 import { z } from 'zod'
 
 export const settingsSchema = z.object({
-  maxDistance: z.number().int().min(0).max(10000),
+  maxDistance: z.number().int().min(0).max(1000),
 })
 
 export type ISettings = z.infer<typeof settingsSchema>
@@ -31,7 +31,7 @@ export function useSettings() {
             return defaultSettings
           }
         },
-        write: v => JSON.stringify(v),
+        write: (v) => JSON.stringify(v),
       },
     },
   )

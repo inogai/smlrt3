@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
-import { AutoForm } from '@/components/ui/auto-form'
+import { AutoForm, AutoFormField } from '@/components/ui/auto-form'
+import { Slider } from '@/components/ui/slider'
 import { useToast } from '@/components/ui/toast'
 
 import type { ISettings } from '@/settings'
@@ -49,6 +50,13 @@ function onSubmit(values: Record<string, unknown>) {
     variant: 'default',
   })
 }
+
+const formValueMaxDistance = computed<[number]>({
+  get: () => [form.values.maxDistance] as [number],
+  set: (value) => {
+    form.setFieldValue('maxDistance', value[0])
+  },
+})
 </script>
 
 <template>
@@ -58,6 +66,15 @@ function onSubmit(values: Record<string, unknown>) {
     class="space-y-6"
     @submit="onSubmit"
   >
+    <template #maxDistance="slotProps">
+      <AutoFormField v-bind="slotProps" />
+      <Slider
+        v-model="formValueMaxDistance"
+        :min="0"
+        :max="1000"
+        :step="50"
+      />
+    </template>
     <button ref="virtualSubmit" type="submit" />
   </AutoForm>
 </template>
