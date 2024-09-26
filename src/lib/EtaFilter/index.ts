@@ -1,20 +1,19 @@
-import type { Variants } from 'breath-enum'
-import { Enum, match, Type as $ } from 'breath-enum'
+import { mktu, type TaggedUnion } from 'mktu'
 
 import type { TEta } from '@/apis/base'
 
 import { cn } from '../utils'
 
-const _EtaFilter = Enum({
-  Text: $<string>,
-  Dest: $<string>,
-  Route: $<string>,
-  Stop: $<string>,
-  Co: $<string>,
-  Not: $<any>,
-})
+export type EtaFilter = TaggedUnion<{
+  Text: string
+  Dest: string
+  Route: string
+  Stop: string
+  Co: string
+  Not: EtaFilter
+}>
 
-export type EtaFilter = Variants<typeof _EtaFilter>
+const _EtaFilter = mktu<EtaFilter>()
 
 export const EtaFilter = Object.assign(_EtaFilter, {
   parse: (queryString: string): EtaFilter => {
@@ -40,7 +39,7 @@ export const EtaFilter = Object.assign(_EtaFilter, {
 
   prototype: {
     colorClass(this: EtaFilter): string {
-      return match(this)({
+      return EtaFilter.match(this, {
         Text: () => cn`bg-gray-200`,
         Dest: () => cn`bg-blue-600 text-white`,
         Route: () => cn`bg-yellow-600 text-white`,
@@ -50,7 +49,7 @@ export const EtaFilter = Object.assign(_EtaFilter, {
       })
     },
     evaluate(this: EtaFilter, eta: TEta): boolean {
-      return match(this)({
+      return EtaFilter.match(this, {
         Text: (val) => {
           return eta.route().name().includes(val)
             || eta.route().dest().includes(val)

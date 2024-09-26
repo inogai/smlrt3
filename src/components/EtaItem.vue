@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { isKind } from 'breath-enum'
-
 import type { TEta } from '@/apis/base'
 import { EtaDescriptor } from '@/apis/EtaDescriptor'
 
@@ -76,32 +74,34 @@ function toggleFavourite() {
             :key="ind"
           >
             <span
-              v-if="isKind(eta.val, EtaDescriptor.JustDeparted)" class="text-sm"
+              v-if="EtaDescriptor.JustDeparted.is(eta.val)" class="text-sm"
             >
               已開出
             </span>
             <span
-              v-else-if="isKind(eta.val, EtaDescriptor.MinutesLeft)"
+              v-else-if="EtaDescriptor.MinutesLeft.is(eta.val)"
               :class="{
                 'text-xl font-bold text-tinted-primary':
                   (ind === 0 || item.items().slice(0, ind).every(
                     ({ val }) => {
-                      return isKind(val, EtaDescriptor.JustDeparted)
+                      return EtaDescriptor.JustDeparted.is(val)
                     },
-                  )) && isKind(eta.val, EtaDescriptor.MinutesLeft),
+                  )) && EtaDescriptor.MinutesLeft.is(eta.val),
               }"
             >
-              {{ eta.val.unwrapAs(EtaDescriptor.MinutesLeft) }}
+              {{ eta.val.value }}
             </span>
-            <template v-else-if="isKind(eta.val, EtaDescriptor.NoEta)">
+            <template v-else-if="EtaDescriptor.NoEta.is(eta.val)">
               沒有班次
             </template>
             <template v-if="ind !== item.items().length - 1">,&nbsp;</template>
           </span>
         </div>
         <div
-          v-if="isKind (item.items()[item.items().length - 1].val,
-                        EtaDescriptor.MinutesLeft)"
+          v-if="EtaDescriptor.MinutesLeft.is(
+            item.items()[item.items().length - 1].val,
+          ),
+          "
         >
           &nbsp;分鐘
         </div>

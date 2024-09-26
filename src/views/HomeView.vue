@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useIntervalFn, useStorage } from '@vueuse/core'
-import { EnumInstanceProto } from 'breath-enum/dist/lib/EnumInstance'
 import { formatDate } from 'date-fns'
 import { computed, ref } from 'vue'
 
@@ -32,24 +31,6 @@ const lrt = new LrtApi()
 const searchQuery = useStorage(
   'searchQuery',
   [] as (EtaFilter & Keyed)[],
-  localStorage,
-  {
-    serializer: {
-      read: (str: string) => {
-        const arr = JSON.parse(str)
-
-        if (!Array.isArray(arr))
-          return []
-
-        arr.forEach((item: EtaFilter & Keyed) => {
-          Object.setPrototypeOf(item, EnumInstanceProto)
-        })
-
-        return arr as (EtaFilter & Keyed)[]
-      },
-      write: JSON.stringify,
-    },
-  },
 )
 
 const favList = useStorage(
