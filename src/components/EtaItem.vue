@@ -74,34 +74,32 @@ function toggleFavourite() {
             :key="ind"
           >
             <span
-              v-if="EtaDescriptor.JustDeparted.is(eta.val)" class="text-sm"
+              v-if="eta.val.kind === 'JustDeparted' " class="text-sm"
             >
               已開出
             </span>
             <span
-              v-else-if="EtaDescriptor.MinutesLeft.is(eta.val)"
+              v-else-if="eta.val.kind === 'MinutesLeft'"
               :class="{
                 'text-xl font-bold text-tinted-primary':
                   (ind === 0 || item.items().slice(0, ind).every(
                     ({ val }) => {
-                      return EtaDescriptor.JustDeparted.is(val)
+                      return val.kind === 'JustDeparted'
                     },
-                  )) && EtaDescriptor.MinutesLeft.is(eta.val),
+                  )) && eta.val.kind === 'MinutesLeft',
               }"
             >
               {{ eta.val.value }}
             </span>
-            <template v-else-if="EtaDescriptor.NoEta.is(eta.val)">
+            <template v-else-if="eta.val.kind === 'NoEta'">
               沒有班次
             </template>
             <template v-if="ind !== item.items().length - 1">,&nbsp;</template>
           </span>
         </div>
         <div
-          v-if="EtaDescriptor.MinutesLeft.is(
-            item.items()[item.items().length - 1].val,
-          ),
-          "
+          v-if="item.items()[item.items().length - 1].val.kind
+            === 'MinutesLeft'"
         >
           &nbsp;分鐘
         </div>

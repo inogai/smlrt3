@@ -1,7 +1,6 @@
 import { type Client, createClient } from '@hey-api/client-fetch'
 
 import * as kmb from '@/clients/kmb'
-import { PROXY_URL } from '@/env'
 import { cache } from '@/lib/cache'
 import { HashMap } from '@/lib/HashMap'
 import type { Result } from '@/lib/results'
@@ -18,9 +17,9 @@ export class KmbApi implements BaseApi {
   fetchStopListDelay: number = 24 * 60 * 60
   fetchEtaDelay: number = 20
 
-  constructor() {
+  constructor({ proxyUrl }: { proxyUrl: string }) {
     this.client = createClient({
-      baseUrl: `${PROXY_URL}/https://data.etabus.gov.hk`,
+      baseUrl: `${proxyUrl}/https://data.etabus.gov.hk`,
     })
   }
 
@@ -78,7 +77,7 @@ export class KmbApi implements BaseApi {
       let eta: EtaDescriptor = EtaDescriptor.Err(new Error('Unknown error'))
 
       if (rawRoute.eta === null) {
-        eta = EtaDescriptor.NoEta
+        eta = EtaDescriptor.NoEta()
       }
       else {
         const date = new Date(rawRoute.eta)
@@ -86,7 +85,7 @@ export class KmbApi implements BaseApi {
         const diff = date.getTime() - now.getTime()
 
         if (diff < 0) {
-          eta = EtaDescriptor.JustDeparted
+          eta = EtaDescriptor.JustDeparted()
         }
         else {
           const minutes = Math.ceil(diff / 60 / 1000)
@@ -135,10 +134,10 @@ export class KmbApi implements BaseApi {
     const stops = await this.getNearbyStops(lat, lon, radius)
 
     return stops.andThenAwait(async (stops) => {
-      const promises = stops.map(async stop => this.getStopEta(stop))
+      const promises = stops.map(async (stop) => this.getStopEta(stop))
       const ret = await Promise.all(promises)
 
-      return Ok(ret.map(r => r.unwrap()).flat())
+      return Ok(ret.map((r) => r.unwrap()).flat())
     })
   }
 }

@@ -1,7 +1,6 @@
 import { type Client, createClient } from '@hey-api/client-fetch'
 
 import * as lrt from '@/clients/lrt'
-import { PROXY_URL } from '@/env'
 import { HashMap } from '@/lib/HashMap'
 import type { Result } from '@/lib/results'
 import { Err, Ok } from '@/lib/results'
@@ -18,9 +17,9 @@ export class LrtApi implements BaseApi {
   fetchStopListDelay: number = 24 * 60 * 60
   fetchEtaDelay: number = 20
 
-  constructor() {
+  constructor({ proxyUrl }: { proxyUrl: string }) {
     this.client = createClient({
-      baseUrl: `${PROXY_URL}/http://rt.data.gov.hk`,
+      baseUrl: `${proxyUrl}/http://rt.data.gov.hk`,
     })
   }
 
@@ -51,11 +50,11 @@ export class LrtApi implements BaseApi {
         let eta: EtaDescriptor = EtaDescriptor.Err(new Error('Unknown error'))
 
         if (rawRoute.time_ch === null) {
-          eta = EtaDescriptor.NoEta
+          eta = EtaDescriptor.NoEta()
         }
         else {
           if (rawRoute.time_ch === '-') {
-            eta = EtaDescriptor.JustDeparted
+            eta = EtaDescriptor.JustDeparted()
           }
           else if (rawRoute.time_ch === '即將抵達') {
             eta = EtaDescriptor.MinutesLeft(0)
@@ -111,10 +110,10 @@ export class LrtApi implements BaseApi {
     const stops = await this.getNearbyStops(lat, lon, radius)
 
     return stops.andThenAwait(async (stops) => {
-      const promises = stops.map(async stop => this.getStopEta(stop))
+      const promises = stops.map(async (stop) => this.getStopEta(stop))
       const ret = await Promise.all(promises)
 
-      return Ok(ret.map(r => r.unwrap()).flat())
+      return Ok(ret.map((r) => r.unwrap()).flat())
     })
   }
 }
