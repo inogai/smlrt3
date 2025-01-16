@@ -1,19 +1,24 @@
-import { mktu, type TaggedUnion } from 'mktu'
-
 import type { TEta } from '@/apis/base'
 
 import { cn } from '../utils'
 
-export type EtaFilter = TaggedUnion<{
-  Text: string
-  Dest: string
-  Route: string
-  Stop: string
-  Co: string
-  Not: EtaFilter
-}>
+interface Text { kind: 'Text', value: string }
+interface Dest { kind: 'Dest', value: string }
+interface Route { kind: 'Route', value: string }
+interface Stop { kind: 'Stop', value: string }
+interface Co { kind: 'Co', value: string }
+interface Not { kind: 'Not', value: EtaFilter }
 
-const _EtaFilter = mktu<EtaFilter>()
+export type EtaFilter = Text | Dest | Route | Stop | Co | Not
+
+const _EtaFilter = {
+  Text: (value: string): Text => ({ kind: 'Text', value }),
+  Dest: (value: string): Dest => ({ kind: 'Dest', value }),
+  Route: (value: string): Route => ({ kind: 'Route', value }),
+  Stop: (value: string): Stop => ({ kind: 'Stop', value }),
+  Co: (value: string): Co => ({ kind: 'Co', value }),
+  Not: (value: EtaFilter): Not => ({ kind: 'Not', value }),
+}
 
 export const EtaFilter = Object.assign(_EtaFilter, {
   parse: (queryString: string): EtaFilter => {
@@ -39,28 +44,34 @@ export const EtaFilter = Object.assign(_EtaFilter, {
 
   prototype: {
     colorClass(this: EtaFilter): string {
-      return EtaFilter.match(this, {
-        Text: () => cn`bg-gray-200`,
-        Dest: () => cn`bg-blue-600 text-white`,
-        Route: () => cn`bg-yellow-600 text-white`,
-        Stop: () => cn`bg-red-600 text-white`,
-        Co: () => cn`bg-purple-500 text-white`,
-        Not: () => cn`bg-gray-700 text-white`,
-      })
+      return {
+        Text: cn`bg-gray-200`,
+        Dest: cn`bg-blue-600 text-white`,
+        Route: cn`bg-yellow-600 text-white`,
+        Stop: cn`bg-red-600 text-white`,
+        Co: cn`bg-purple-500 text-white`,
+        Not: cn`bg-gray-700 text-white`,
+      }[this.kind]
     },
     evaluate(this: EtaFilter, eta: TEta): boolean {
-      return EtaFilter.match(this, {
-        Text: (val) => {
-          return eta.route().name().includes(val)
-            || eta.route().dest().includes(val)
-            || eta.station().name().includes(val)
-        },
-        Dest: (val) => eta.route().dest().includes(val),
-        Route: (val) => eta.route().name() === val,
-        Stop: (val) => eta.station().name() === val,
-        Co: (val) => eta.co() === val,
-        Not: (val) => !EtaFilter.prototype.evaluate.call(val, eta),
-      })
+      switch (this.kind) {
+        case 'Text':
+          return eta.route().name().includes(this.value)
+            || eta.route().dest().includes(this.value)
+            || eta.station().name().includes(this.value)
+        case 'Dest':
+          return eta.route().dest().includes(this.value)
+        case 'Route':
+          return eta.route().name() === this.value
+        case 'Stop':
+          return eta.station().name() === this.value
+        case 'Co':
+          return eta.co() === this.value
+        case 'Not':
+          return !EtaFilter.prototype.evaluate.call(this.value, eta)
+        default:
+          throw new Error('Unknown type')
+      }
     },
   },
 })
