@@ -83,7 +83,7 @@ const lastUpdateStr = computed(() => {
 })
 
 function updateFavourite(key: string, val: boolean) {
-  const entry = etaEntries.value.find((e) => e.key === key)
+  const entry = etaEntries.value.find(e => e.key === key)
 
   if (entry)
     entry.isFavourite = val

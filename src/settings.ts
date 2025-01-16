@@ -33,7 +33,7 @@ export function useSettings() {
             return defaultSettings
           }
         },
-        write: (v) => JSON.stringify(v),
+        write: v => JSON.stringify(v),
       },
     },
   )

@@ -110,10 +110,10 @@ export class LrtApi implements BaseApi {
     const stops = await this.getNearbyStops(lat, lon, radius)
 
     return stops.andThenAwait(async (stops) => {
-      const promises = stops.map(async (stop) => this.getStopEta(stop))
+      const promises = stops.map(async stop => this.getStopEta(stop))
       const ret = await Promise.all(promises)
 
-      return Ok(ret.map((r) => r.unwrap()).flat())
+      return Ok(ret.map(r => r.unwrap()).flat())
     })
   }
 }

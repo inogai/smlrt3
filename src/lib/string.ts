@@ -17,5 +17,5 @@ export function splitCamelCase(str: string): string[] {
 }
 
 export function toTitleCase(words: string[]): string {
-  return words.map((word) => word[0].toUpperCase() + word.slice(1)).join(' ')
+  return words.map(word => word[0].toUpperCase() + word.slice(1)).join(' ')
 }
