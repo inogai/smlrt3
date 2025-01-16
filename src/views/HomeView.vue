@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useIntervalFn, useStorage } from '@vueuse/core'
 import { formatDate } from 'date-fns'
+import * as R from 'remeda'
 import { computed, ref } from 'vue'
 
 import EtaFilterInput from '@/components/EtaFilterInput.vue'
@@ -63,14 +64,13 @@ const etaEntries = computed<Entry[]>(
 )
 
 const computedEtaEntries = computed(() => {
-  return etaEntries.value
-    .filter(evalSearchQuery)
-    .map((entry) => ({
-      ...entry,
-      precedance: -entry.distance / settings.value.maxDistance
-        + (entry.isFavourite ? 1 : 0),
-    }))
-    .sort((a, b) => b.precedance - a.precedance)
+  return R.pipe(
+    etaEntries.value,
+    R.filter(evalSearchQuery),
+    R.sortBy(x =>
+      -x.distance / settings.value.maxDistance
+      + (x.isFavourite ? 0 : 2)),
+  )
 })
 
 const lastUpdate = ref<Date | null>(null)
