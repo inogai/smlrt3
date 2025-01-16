@@ -22,7 +22,6 @@
     "haversine-distance": "^1.2.3",
     "idb-keyval": "^6.2.1",
     "lucide-vue-next": "^0.441.0",
-    "mktu": "link:../mktu-ts",
     "radix-vue": "^1.9.5",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
