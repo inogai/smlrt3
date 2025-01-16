@@ -8,7 +8,8 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "eslint . --fix"
+    "format": "eslint . --fix",
+    "gh-pages": "gh-pages -d dist"
   },
   "dependencies": {
     "@hey-api/client-fetch": "^0.2.4",
@@ -47,6 +48,7 @@
     "eslint-plugin-readable-tailwind": "^1.8.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-tailwindcss": "^3.17.4",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.4.45",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.11",
