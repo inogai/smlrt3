@@ -25,8 +25,12 @@ import { SetSerializer } from '@/lib/serializers'
 import type { Keyed } from '@/lib/traits/Keyed'
 import { useSettings } from '@/settings'
 
-const kmb = new KmbApi()
-const lrt = new LrtApi()
+const settings = useSettings()
+
+const { proxyUrl } = settings.value
+
+const kmb = new KmbApi({ proxyUrl })
+const lrt = new LrtApi({ proxyUrl })
 
 const searchQuery = useStorage(
   'searchQuery',
@@ -39,8 +43,6 @@ const favList = useStorage(
   localStorage,
   { serializer: SetSerializer },
 )
-
-const settings = useSettings()
 
 function evalSearchQuery(entry: Entry): boolean {
   return searchQuery.value.every((q) => {
