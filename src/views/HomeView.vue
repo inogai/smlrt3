@@ -66,6 +66,7 @@ const etaEntries = computed<Entry[]>(
 const computedEtaEntries = computed(() => {
   return R.pipe(
     etaEntries.value,
+    R.uniqueBy(x => x.key),
     R.filter(evalSearchQuery),
     R.sortBy(x =>
       -x.distance / settings.value.maxDistance
